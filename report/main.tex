@@ -1,0 +1,99 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}                			
+\geometry{letterpaper}                   			
+\usepackage[parfill]{parskip}    				
+\usepackage{graphicx}	
+
+\usepackage[numbers,sort&compress]{natbib}  
+\usepackage{amssymb}
+\usepackage{amsmath}					
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage[autolanguage]{numprint}
+%% \usepackage[latin1]{inputenc}
+%% \usepackage[cyr]{aeguill}
+\usepackage{color}						
+
+
+\usepackage{hyperref}
+\usepackage{listings}				
+
+\usepackage{tabto}
+\usepackage{array}
+\usepackage{amsmath}
+
+\usepackage{hyperref}
+
+\usepackage{url}
+\usepackage{wrapfig}
+
+\usepackage{amssymb}
+
+\usepackage{caption}
+
+\definecolor{backcolour}{rgb}{0.97,0.95,0.93}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+}
+
+\author{\Large \textsc{Mohammed FELLAJI, Ahmed BEN AISSA}}
+\date{September, 2020}
+
+\begin{document}
+
+\hypersetup{pdfborder=0 0 0} 		%pour enlever le cadre rouge dans la tables des matières 
+
+
+\makeatletter
+  \begin{titlepage}
+  \centering
+     {\large \textsc{   }}\\
+     \vspace{1em}
+    \centering
+      \includegraphics[width=0.5 \textwidth]{figures/LogoCS.png} \\
+    \vspace{4cm}
+      {\LARGE\textbf{Inférence Statistique des Relations de Causalité}\\
+       \vspace{1em}
+       {\large\textbf{
+       \textit{\LARGE{Vers des algorithmes d'apprentissage éthique?}}}}\\
+    \vspace{4cm}
+    \centering
+     {\Large \textsc{Encadrant : Frédéric Pennerath}}\\
+     \vspace{1em}
+        {\Large \@author} \\ 
+        \vspace{3em}
+        {\Large \@date} }\\
+  \end{titlepage}
+\makeatother
+
+
+\tableofcontents
+%% \listoffigures
+
+%% \newpage
+%% \listoftables
+
+
+
+%%%%%%%%%%%%%%%
+\newpage
+\section{Introduction}
+
+\newpage
+\section{Etude Bibliographique}
+
+
+\newpage
+\section{Définition de la causalité}
+(this is just a test) \\
+hello\cite{rubin2005causal}
+
+\newpage
+\bibliographystyle{plain} % We choose the "plain" reference style
+\bibliography{reference/ref} 
+
+\end{document}
+
