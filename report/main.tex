@@ -1,4 +1,3 @@
-% !TEX encoding = UTF-8 Unicode
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage{geometry}
@@ -9,11 +8,9 @@
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage{amssymb}
 \usepackage{amsmath}
-\usepackage[english]{babel}   %    
+\usepackage[english]{babel}   
 \usepackage[T1]{fontenc}
 \usepackage[autolanguage]{numprint}
-%% \usepackage[latin1]{inputenc}
-%% \usepackage[cyr]{aeguill}
 \usepackage{color}
 
 
@@ -39,13 +36,12 @@
     backgroundcolor=\color{backcolour},
 }
 
-\author{\Large \textsc{Mohammed FELLAJI, Ahmed BEN AISSA}}
+\author{\Large \textsc{\href{mailto:mohammed.fellaji@supelec.fr}{Mohammed FELLAJI}, \href{mailto:ahmed.benaissa@supelec.fr}{Ahmed BEN AISSA}}}
 \date{September, 2020}
 
 \begin{document}
 
-\hypersetup{pdfborder=0 0 0} 		%pour enlever le cadre rouge dans la tables des matières
-
+\hypersetup{pdfborder=0 0 0} 		
 
 \makeatletter
   \begin{titlepage}
@@ -55,15 +51,15 @@
     \centering
       \includegraphics[width=0.5 \textwidth]{figures/LogoCS.png} \\
     \vspace{4cm}
-      {\LARGE\textbf{Inférence Statistique des Relations de Causalité}\\
+      {\LARGE\textbf{Case Study : Causal Inference}\\  
        \vspace{1em}
        {\large\textbf{
-       \textit{\LARGE{Vers des algorithmes d'apprentissage éthique?}}}}\\
+       \textit{\LARGE{Toward Ethical Algorithms ?}}}}\\  
     \vspace{4cm}
     \centering
-     {\Large \textsc{Encadrant : Frédéric Pennerath}}\\
+     {\Large \@author} \\
      \vspace{1em}
-        {\Large \@author} \\
+        {\Large \textsc{Supervisor : \href{mailto:frederic.pennerath@centralesupelec.fr}{Frédéric PENNERATH}}}\\
         \vspace{3em}
         {\Large \@date} }\\
   \end{titlepage}
@@ -82,22 +78,46 @@
 %%%%%%%%%%%%%%%
 \newpage
 \section{Introduction}
+One of the most challenging questions in every problem is the one related to understanding the reason why an action happened and whether or not we can explain it with the information we have in our disposal. Another interesting one might ask is what would be the outcome if the condition of the experiment were different ? What would happen if we have more/less information ? What will we get if we change completely the set of inputs ?
+
+When thinking about these questions, having a time machine seems as the perfect solution : we can then repeat the same experiment with different initial conditions and record the outcome in every scenario. A more realistic a possible solution would be to use Causal inference, which aims to estimate the likelihood of an event under static conditions and also under dynamic changing conditions.
+
+When searching about causal inference, one will definitely come across some of the work of Judea Pearl who is credited for developing a theory of counterfactuals and causal inference based on structured models.\footnote{After watching dozens of Judea Pearl lectures and reading many of his papers, we can only recommend doing the same. One of his main ideas is that even if machine learning is shaping millions of industries around the globe, this is done without attention to fundamental theoretical impediments. This might lead machine learning algorithms, very soon, to reach the barriers of impossibility. According to Judea Pearl, the goal is to use the knowledge acquired from causal inference and combine it with the success of machine learning in order to achieve more general models.}
+
+In this document, we will try to study the different literatures about causal inference and collect the results in a simple and yet detailed way. Many papers and book are mentioned in the references section, some were used in writing these document, some are not. Those interested more in the subject may take a look at them.  
 
 
 \newpage
-\section{Bibliographic study}
-one of the main papers : \cite{pearl2019seven} \href{https://cacm.acm.org/magazines/2019/3/234929-the-seven-tools-of-causal-inference-with-reflections-on-machine-learning/fulltext?mobile=false}{link}
 
-\subsection{let's start with an example}
+\section{Causation vs Association}
+\subsection{Example}
+\cite{pearl2019seven} \cite{hernan2020causal}  One of the most common phrases in statistics is "correlation does not imply causation". To understand it well, let's take a look a the following example :
 
-\subsection{Causation vs Association}
-\cite{pearl2019seven} \cite{hernan2020causal}  \cite{pearl2010mathematics} One of commun phrases in statistics is 
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6 \textwidth]{figures/corr_caus.png}
+\caption{an example of correlation : \href{https://www.decisionskills.com/blog/how-ice-cream-kills-understanding-cause-and-effect}{source}}
+\end{figure}
 
-\subsection{Association - Intervention - Counterfactuals}
+Without having any information about what we are trying to model, we might conclude that there is a cause-effect relationship between these two measures. The graph also shows a correlation close to 1 for the two curves. When we start to analyse the data in details, the first thing that comes to our mind is that there is no logical relationship (and thus no cause-effect relationship) between the sale of ice cream and the forest fires. However, we can see clearly in the graph that the values are higher between May and November (with a peak in July) compared to the rest of the year. In fact, the heat is the reason behind forest fires and the sale of ice cream. We can then conclude the following : 
+
+\begin{itemize}
+\item[--] a causation between the heat and the sale of ice cream;
+\item[--] a causation between the heat and the forest fire;
+\item[--] a correlation between the sale of ice cream and the sale of ice cream.
+\end{itemize}
+
+This simple example shows us that, in general and without having a good knowledge about the problem, we tend to assume simple correlations between 2 variables when in fact there is a third variable that causes both of them. This is a core idea in causal inference : unlike for correlation, we can not rely only on the distribution of the data, even at the population level, but we also should rely on causal assumption that is always not testable in observational studies.\cite{pearl2010mathematics} 
+
+\subsection{Definitions}
+
+\section{Association - Intervention - Counterfactuals}
+
+One of the very interesting papers that explains causal inference is : \href{https://cacm.acm.org/magazines/2019/3/234929-the-seven-tools-of-causal-inference-with-reflections-on-machine-learning/fulltext?mobile=false}{"The Seven Tools of Causal Inference, with Reflections on Machine Learning"} \cite{pearl2019seven}. This section is thus inspired mostly by this paper.
 
  \cite{pearl2019seven} 
 
-\subsection{Paper : Judea Pearl}
+\section{Paper : Judea Pearl}
 
 see \cite{pearl2010mathematics} \\
 One of the best paper so far. It explains clearly the difference between the causal concept and the associational concept (for example : correlation). The first concept ...
@@ -106,24 +126,28 @@ One of the best paper so far. It explains clearly the difference between the cau
 %% http://singapore.cs.ucla.edu/csl_papers.html     http://bayes.cs.ucla.edu/home.htm
 
 
-\subsection{Notations}
+\section{Notations}
 see \cite{yao2020survey} and \cite{hernan2020causal}
 
-\subsection{definition of counterfactual}
+\section{definition of counterfactual}
 
-\subsection{Simpson's paradoxe}
+\section{Simpson's paradoxe}
 
 - give definition :
 
 - give example : Cholesterol  
 
-\subsection{Average Causal Effect}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8 \textwidth]{figures/simpson.png}
+\caption{Illustration of the Simpson’s Paradox\cite{pearl2016causal}}
+\end{figure}
+
+\section{Average Causal Effect}
 
 see \cite{hernan2020causal}
 
 
-
-\newpage
 \section{Definition of the causality}
 
 Perhaps the most important message of the discussion and methods presented in this paper would be a widespread awareness that (1) all studies concerning causal relations must begin with causal assumptions of some sort and (2) that a friendly and formal language is currently available for articulating such assumptions.\cite{pearl2010mathematics}
