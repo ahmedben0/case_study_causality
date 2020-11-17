@@ -75,7 +75,8 @@
 
 
 
-%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newpage
 \section{Introduction}
 One of the most challenging questions in every problem is the one related to understanding the reason why an action happened and whether or not we can explain it with the information we have in our disposal. Another interesting one might ask is what would be the outcome if the condition of the experiment were different ? What would happen if we have more/less information ? What will we get if we change completely the set of inputs ?
@@ -89,14 +90,19 @@ In this document, we will try to study the different literatures about causal in
 
 \newpage
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Causation vs Association}
-\subsection{Example}
-\cite{pearl2019seven} \cite{hernan2020causal}  One of the most common phrases in statistics is "correlation does not imply causation". To understand it well, let's take a look a the following example :
+
+	\subsection{Example}
+	
+%\cite{pearl2019seven} \cite{hernan2020causal}  
+One of the most common phrases in statistics is "correlation does not imply causation". To understand it well, let's take a look a the following example :
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.6 \textwidth]{figures/corr_caus.png}
-\caption{an example of correlation : \href{https://www.decisionskills.com/blog/how-ice-cream-kills-understanding-cause-and-effect}{source}}
+\caption{an example of correlation \href{https://www.decisionskills.com/blog/how-ice-cream-kills-understanding-cause-and-effect}{(source)}}
 \end{figure}
 
 Without having any information about what we are trying to model, we might conclude that there is a cause-effect relationship between these two measures. The graph also shows a correlation close to 1 for the two curves. When we start to analyse the data in details, the first thing that comes to our mind is that there is no logical relationship (and thus no cause-effect relationship) between the sale of ice cream and the forest fires. However, we can see clearly in the graph that the values are higher between May and November (with a peak in July) compared to the rest of the year. In fact, the heat is the reason behind forest fires and the sale of ice cream. We can then conclude the following : 
@@ -109,33 +115,60 @@ Without having any information about what we are trying to model, we might concl
 
 This simple example shows us that, in general and without having a good knowledge about the problem, we tend to assume simple correlations between 2 variables when in fact there is a third variable that causes both of them. This is a core idea in causal inference : unlike for correlation, we can not rely only on the distribution of the data, even at the population level, but we also should rely on causal assumption that is always not testable in observational studies.\cite{pearl2010mathematics} 
 
-\subsection{Definitions}
+	\subsection{Definitions}
+	
+The previous example shows a clear difference between causation and correlation. More generally, correlation is a special example of an association concept. The definition of these two concepts is given by Judea Pearl\cite{pearl2010mathematics, pearl2009causal} as follows :
 
-\section{Association - Intervention - Counterfactuals}
+\begin{itemize}
+\item[--] An \textbf{associational concept} is any relationship that can be defined in terms of a joint distribution of observed variables. For example: regression, correlation.
+\item[--] A \textbf{causal concept} is any relationship that cannot be defined from the distribution alone. One should also rely on causal assumption that explains the different relationships. For example: randomisation, confounding (it will be detailed later).
+\end{itemize}
+
+
+	\subsection{The difference between the 2 notions}
+
+To have a better understanding of how causation and association differ, the following example is considered. The goal of a study is to test the effectiveness of a vaccine on a sick population. Let's denote by A the action of injecting the vaccine and by Y the effect of the vaccine on the population. In an association approach, the population will be divided into 2 groups : only one group will be injected with the vaccine. The effectiveness of the treatment is thus measured on the treated population ( $E[Y|A = 1]$ ) and it is also possible to see if the untreated population will be treated without the vaccine ( $E[Y|A = 0]$ ). However, in a causation approach, we suppose that is possible to inject the whole population and study the effect of the vaccine ( $E[Y^{a=1}]$ ) and at the same time, have the same population \textbf{not} injected ( $E[Y^{a=0}]$ ). 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6 \textwidth]{figures/asso_caus.png}
+\caption{a visualisation of the difference between causation and association}
+\end{figure}
+
+One can see clearly the impossibility of applying in the causation approach : it is impossible to go back in time and inject an individual who was not injected. Meanwhile, there is some technics so that such an experiment can be possible : randomised experimentation is one example that will be detailed later.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Counterfactuals}
+
+- definition 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Confounders}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{The Causal Hierarchy}
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7 \textwidth]{figures/asso_inter_caus.png}
+\caption{The causal hierarchy\cite{pearl2019seven}}
+\end{figure}
+
 
 One of the very interesting papers that explains causal inference is : \href{https://cacm.acm.org/magazines/2019/3/234929-the-seven-tools-of-causal-inference-with-reflections-on-machine-learning/fulltext?mobile=false}{"The Seven Tools of Causal Inference, with Reflections on Machine Learning"} \cite{pearl2019seven}. This section is thus inspired mostly by this paper.
 
  \cite{pearl2019seven} 
+ 
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+ \section{Simpson's paradoxe}
 
-\section{Paper : Judea Pearl}
-
-see \cite{pearl2010mathematics} \\
-One of the best paper so far. It explains clearly the difference between the causal concept and the associational concept (for example : correlation). The first concept ...
-
-
-%% http://singapore.cs.ucla.edu/csl_papers.html     http://bayes.cs.ucla.edu/home.htm
-
-
-\section{Notations}
-see \cite{yao2020survey} and \cite{hernan2020causal}
-
-\section{definition of counterfactual}
-
-\section{Simpson's paradoxe}
-
-- give definition :
-
-- give example : Cholesterol  
+Simpson’s paradox, also called Yule-Simpson effect, in statistics, an effect that occurs when the marginal association between two categorical variables is qualitatively different from the partial association between the same two variables after controlling for one or more other variables.
 
 \begin{figure}[h]
 \centering
@@ -143,10 +176,28 @@ see \cite{yao2020survey} and \cite{hernan2020causal}
 \caption{Illustration of the Simpson’s Paradox\cite{pearl2016causal}}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Paper : Judea Pearl -- remove this}
+
+see \cite{pearl2010mathematics} \\
+One of the best paper so far. It explains clearly the difference between the causal concept and the associational concept (for example : correlation). The first concept ...
+
+
+%% http://singapore.cs.ucla.edu/csl_papers.html     http://bayes.cs.ucla.edu/home.htm
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Notations -- remove this}
+see \cite{yao2020survey} and \cite{hernan2020causal}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Average Causal Effect}
 
 see \cite{hernan2020causal}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Definition of the causality}
 
@@ -154,13 +205,18 @@ Perhaps the most important message of the discussion and methods presented in th
 
 \cite{rubin2005causal}
 
-\section{Python Library : DoWhy}
-library developed by Microsoft \cite{dowhy}, blog article available \href{https://www.microsoft.com/en-us/research/blog/dowhy-a-library-for-causal-inference/}{link}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Causal discovery}
 
 A traditional way to discover causal relations is to use interventions or randomized experiments, which is, however, in many cases of interest too expensive, too time- consuming, unethical, or even impossible. Therefore, inferring the underlying causal structure from purely observational data, or from combinations of observational and experimental data, has drawn much attention in various disciplines. With the rapid accumulation of huge volumes of data, it is necessary to develop automatic causal search algorithms that scale well.\cite{10.3389/fgene.2019.00524}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Python Library : DoWhy}
+library developed by Microsoft \cite{dowhy}, blog article available \href{https://www.microsoft.com/en-us/research/blog/dowhy-a-library-for-causal-inference/}{link}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newpage
 \bibliographystyle{ieeetr} % plain : no order -- ieeetr : sorted

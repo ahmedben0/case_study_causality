@@ -1,37 +1,46 @@
 \begin{thebibliography}{10}
 
-\bibitem{pearl2019seven}
-J.~Pearl, ``The seven tools of causal inference, with reflections on machine
-  learning,'' {\em Communications of the ACM}, vol.~62, no.~3, pp.~54--60,
-  2019.
-
-\bibitem{hernan2020causal}
-M.~A. Hern{\'a}n and J.~M. Robins, ``Causal inference: what if,'' {\em Boca
-  Raton: Chapman \& Hill/CRC}, vol.~2020, 2020.
-
 \bibitem{pearl2010mathematics}
 J.~Pearl, ``The mathematics of causal relations,'' {\em Causality and
   Psychopathology: Finding the Determinants of Disorders and their Cures (P.
   Shrout, K. Keyes and K. Ornstein, eds.). Oxford University Press, Corvallis,
   OR}, pp.~47--65, 2010.
 
+\bibitem{pearl2009causal}
+J.~Pearl {\em et~al.}, ``Causal inference in statistics: An overview,'' {\em
+  Statistics surveys}, vol.~3, pp.~96--146, 2009.
+
+\bibitem{pearl2019seven}
+J.~Pearl, ``The seven tools of causal inference, with reflections on machine
+  learning,'' {\em Communications of the ACM}, vol.~62, no.~3, pp.~54--60,
+  2019.
+
+\bibitem{pearl2016causal}
+J.~Pearl, M.~Glymour, and N.~P. Jewell, {\em Causal inference in statistics: A
+  primer}.
+\newblock John Wiley \& Sons, 2016.
+
 \bibitem{yao2020survey}
 L.~Yao, Z.~Chu, S.~Li, Y.~Li, J.~Gao, and A.~Zhang, ``A survey on causal
   inference,'' {\em arXiv preprint arXiv:2002.02770}, 2020.
+
+\bibitem{hernan2020causal}
+M.~A. Hern{\'a}n and J.~M. Robins, ``Causal inference: what if,'' {\em Boca
+  Raton: Chapman \& Hill/CRC}, vol.~2020, 2020.
 
 \bibitem{rubin2005causal}
 D.~B. Rubin, ``Causal inference using potential outcomes: Design, modeling,
   decisions,'' {\em Journal of the American Statistical Association}, vol.~100,
   no.~469, pp.~322--331, 2005.
 
-\bibitem{dowhy}
-``Do{W}hy: {A Python package for causal inference}.''
-  https://github.com/microsoft/dowhy, 2019.
-
 \bibitem{10.3389/fgene.2019.00524}
 C.~Glymour, K.~Zhang, and P.~Spirtes, ``Review of causal discovery methods
   based on graphical models,'' {\em Frontiers in Genetics}, vol.~10, p.~524,
   2019.
+
+\bibitem{dowhy}
+``Do{W}hy: {A Python package for causal inference}.''
+  https://github.com/microsoft/dowhy, 2019.
 
 \bibitem{marx2019testing}
 A.~Marx and J.~Vreeken, ``Testing conditional independence on discrete data
@@ -41,18 +50,9 @@ A.~Marx and J.~Vreeken, ``Testing conditional independence on discrete data
 B.~Sch{\"o}lkopf, ``Causality for machine learning,'' {\em arXiv preprint
   arXiv:1911.10500}, 2019.
 
-\bibitem{pearl2009causal}
-J.~Pearl {\em et~al.}, ``Causal inference in statistics: An overview,'' {\em
-  Statistics surveys}, vol.~3, pp.~96--146, 2009.
-
 \bibitem{judea2000causality}
 P.~Judea, ``Causality: models, reasoning, and inference,'' {\em Cambridge
   University Press. ISBN 0}, vol.~521, no.~77362, p.~8, 2000.
-
-\bibitem{pearl2016causal}
-J.~Pearl, M.~Glymour, and N.~P. Jewell, {\em Causal inference in statistics: A
-  primer}.
-\newblock John Wiley \& Sons, 2016.
 
 \bibitem{pearl2011science}
 J.~Pearl, ``The science and ethics of causal modeling,'' {\em Handbook of
