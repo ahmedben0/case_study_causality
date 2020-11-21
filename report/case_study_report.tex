@@ -79,7 +79,7 @@
 
 \newpage
 \section{Introduction}
-One of the most challenging questions in every problem is the one related to understanding the reason why an action happened and whether or not we can explain it with the information we have in our disposal. Another interesting one might ask is what would be the outcome if the condition of the experiment were different ? What would happen if we have more/less information ? What will we get if we change completely the set of inputs ?
+One of the most challenging questions in every problem is the one related to understanding the reason(s) why an action happened and whether or not we can explain it with the information we have at our disposal. Another interesting question one might ask is what would be the outcome if the conditions of the experiment were different ? What would happen if we have more/less information ? What will we get if we change completely the set of inputs ?
 
 When thinking about these questions, having a time machine seems as the perfect solution : we can then repeat the same experiment with different initial conditions and record the outcome in every scenario. A more realistic a possible solution would be to use Causal inference, which aims to estimate the likelihood of an event under static conditions and also under dynamic changing conditions.
 
@@ -92,11 +92,16 @@ In this document, we will try to study the different literatures about causal in
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Causation vs Association}
+\section{Fundamental notions}
 
-	\subsection{Example}
-	
-%\cite{pearl2019seven} \cite{hernan2020causal}  
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Causation vs Association}
+
+	\subsubsection{Example}
+
 One of the most common phrases in statistics is "correlation does not imply causation". To understand it well, let's take a look a the following example :
 
 \begin{figure}[h]
@@ -115,7 +120,7 @@ Without having any information about what we are trying to model, we might concl
 
 This simple example shows us that, in general and without having a good knowledge about the problem, we tend to assume simple correlations between 2 variables when in fact there is a third variable that causes both of them. This is a core idea in causal inference : unlike for correlation, we can not rely only on the distribution of the data, even at the population level, but we also should rely on causal assumption that is always not testable in observational studies.\cite{pearl2010mathematics} 
 
-	\subsection{Definitions}
+	\subsubsection{Definitions}
 	
 The previous example shows a clear difference between causation and correlation. More generally, correlation is a special example of an association concept. The definition of these two concepts is given by Judea Pearl\cite{pearl2010mathematics, pearl2009causal} as follows :
 
@@ -125,9 +130,9 @@ The previous example shows a clear difference between causation and correlation.
 \end{itemize}
 
 
-	\subsection{The difference between the 2 notions}
+	\subsubsection{The difference between the 2 notions}
 
-To have a better understanding of how causation and association differ, the following example is considered. The goal of a study is to test the effectiveness of a vaccine on a sick population. Let's denote by A the action of injecting the vaccine and by Y the effect of the vaccine on the population. In an association approach, the population will be divided into 2 groups : only one group will be injected with the vaccine. The effectiveness of the treatment is thus measured on the treated population ( $E[Y|A = 1]$ ) and it is also possible to see if the untreated population will be treated without the vaccine ( $E[Y|A = 0]$ ). However, in a causation approach, we suppose that is possible to inject the whole population and study the effect of the vaccine ( $E[Y^{a=1}]$ ) and at the same time, have the same population \textbf{not} injected ( $E[Y^{a=0}]$ ). 
+To have a better understanding of how causation and association differ, the following example is considered. The goal of a study is to test the effectiveness of a vaccine on a sick population. Let's denote by A the action of injecting the vaccine and by Y the effect of the vaccine on the population. In an association approach, the population will be divided into 2 groups : only one group will be injected with the vaccine. The effectiveness of the treatment is thus measured on the treated population ( $E[Y|A = 1]$ ) and it is also possible to see if the untreated population will be treated without the vaccine ( $E[Y|A = 0]$ ). However, in a causation approach, we suppose that is possible to inject the whole population and study the effect of the vaccine ( $E[Y^{a=1}]$ ) and at the same time, have the same population \textbf{not} injected ( $E[Y^{a=0}]$ ).
 
 \begin{figure}[h]
 \centering
@@ -135,22 +140,70 @@ To have a better understanding of how causation and association differ, the foll
 \caption{a visualisation of the difference between causation and association}
 \end{figure}
 
-One can see clearly the impossibility of applying in the causation approach : it is impossible to go back in time and inject an individual who was not injected. Meanwhile, there is some technics so that such an experiment can be possible : randomised experimentation is one example that will be detailed later.
+One can see clearly the impossibility of applying in the causation approach : it is impossible to go back in time and inject an individual who was not injected; we can only observe one of the different potential outcomes. Meanwhile, there is some technics so that such an experiment can be possible: randomised experimentation is one example that will be detailed later.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Counterfactuals}
+\subsection{Counterfactuals}
 
-- definition 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Confounders}
-
+This is an important concept for causation. Counterfactuals could be defined as the answer to the question "what if ?" or simply as the unobserved outcome. If we consider the previous example in the case of an association, the unobserved outcomes will be the observations of "what if we have injected the proportion of the population that was not injected ?" and of "what if we have not injected the proportion of the population that was injected ?".
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{The Causal Hierarchy}
+\subsection{Confounders}
+
+A confounding variable is an unmeasured variable that influences both the supposed cause and the supposed effect. Ignoring the confounder may lead to conclude an association between 2 variables when actually it is not the case. Confounders can also increase the variance or introduce biais.
+
+Different technics exist to reduce the effect of the confounders (random samples, control variable ...)\footnote{An interesting article about confounders could be found at \href{https://www.statisticshowto.com/experimental-design/confounding-variable/}{www.statisticshowto.com}}. However, knowing in advance all the the confounders in the data/model is still very important.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5 \textwidth]{figures/confounding.png}
+\caption{An example of a confounding variable : in this example, the Gender is not observed and it is affecting the variables Drug and Recovery}
+\end{figure}
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+ \subsection{Simpson's paradox}
+
+Simpson’s paradox, also called Yule-Simpson effect, in statistics, an effect that occurs when the marginal association between two categorical variables is qualitatively different from the partial association between the same two variables after controlling for one or more other variables.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7 \textwidth]{figures/simpson.png}
+\caption{Illustration of the Simpson’s Paradox\cite{pearl2016causal}}
+\end{figure}
+
+The above example is one of the best illustration of the Simpson's paradox : when analysing the whole dataset, the first conclusion we can draw is that the amount of exercice is positively correlated with the level of cholesterol. Although, when including the information of age, we can see clearly, for every age category, a negative correlation between the two variables. Thus, domain knowledge is something very important when investigating the relationships in the data and sometimes the expected results are achieved only after increasing/decreasing the studied set of data - adding/excluding some variables.
+
+\newpage 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Causal inference}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Average Causal Effect - ACE}
+
+see \cite{hernan2020causal}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Individual level Causal Effect - ICE}
+
+see \cite{hernan2020causal}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Fundamental Problem of Causal Inference}
+
+- Missing data problem 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{The Causal Hierarchy}
 
 
 \begin{figure}[h]
@@ -162,20 +215,14 @@ One can see clearly the impossibility of applying in the causation approach : it
 
 One of the very interesting papers that explains causal inference is : \href{https://cacm.acm.org/magazines/2019/3/234929-the-seven-tools-of-causal-inference-with-reflections-on-machine-learning/fulltext?mobile=false}{"The Seven Tools of Causal Inference, with Reflections on Machine Learning"} \cite{pearl2019seven}. This section is thus inspired mostly by this paper.
 
- \cite{pearl2019seven} 
+\cite{pearl2019seven} 
  
- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  
- \section{Simpson's paradoxe}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+ \subsection{Graph representation}
 
-Simpson’s paradox, also called Yule-Simpson effect, in statistics, an effect that occurs when the marginal association between two categorical variables is qualitatively different from the partial association between the same two variables after controlling for one or more other variables.
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.8 \textwidth]{figures/simpson.png}
-\caption{Illustration of the Simpson’s Paradox\cite{pearl2016causal}}
-\end{figure}
-
+\newpage 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Paper : Judea Pearl -- remove this}
@@ -191,20 +238,17 @@ One of the best paper so far. It explains clearly the difference between the cau
 \section{Notations -- remove this}
 see \cite{yao2020survey} and \cite{hernan2020causal}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Average Causal Effect}
-
-see \cite{hernan2020causal}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Definition of the causality}
+\section{Definition of the causality -- remove this}
 
 Perhaps the most important message of the discussion and methods presented in this paper would be a widespread awareness that (1) all studies concerning causal relations must begin with causal assumptions of some sort and (2) that a friendly and formal language is currently available for articulating such assumptions.\cite{pearl2010mathematics}
 
 \cite{rubin2005causal}
 
+
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Causal discovery}
