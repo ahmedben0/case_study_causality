@@ -207,7 +207,8 @@ $$ ICE = \delta = Y_{i}^{a=1} - Y_{i}^{a=0} $$
 The ACE is the population average of the individual level causal effects :
 $$ ACE = E[\delta] = E[Y^{a=1}] - E[Y^{a=0}] $$
 
-If the treatment has a causal effect on the outcome, the value of the ACE will be different than 0 and it will be equal to zero in the other case. This is a mesure of the causation.
+ACE is computed over the entire population. If the treatment has a causal effect on the outcome, the value of the ACE will be different than 0 and it will be equal to zero in the other case. This is a mesure of the causation. 
+
 \subsection{Standard estimator : S*}
 
 $$ S^{*} = E[Y^{a=1}|A=1] - E[Y^{a=0}|A=0] $$
@@ -220,7 +221,9 @@ S* is computed from the treatment and control groups, and not from the entire po
 
 Because one can never observe both potentiel outcomes ( the outcome under different treatments ), it is impossible to mesure directly the causal effects ( ACE and ICE ). This is what Holland called as the "fundamental problem of causal inference" \cite{holland1986statistics}.
 
-- Missing data problem 
+This can be seen as missing data problem : we have $E[Y^{a=1}|A=1]$ and $E[Y^{a=0}|A=0]$ which are equal respectively to $E[Y|A=1]$ and $E[Y|A=0]$ but we don't know  $E[Y^{a=1}|A=0]$ and $E[Y^{a=1}|A=0]$.
+
+Since S* is a mesure of association and ACE is a mesure of the causation, these 2 values are not necessarily equal.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -235,7 +238,14 @@ A scientific study in which the investigator observes and records the relevant d
 Statistical data, derived from studies and experimentation, can represent many forms of bias. The two most relevant to causal inference are Measurement Bias and Selection Bias.
 
 
-As a result, ..... - add formulas
+In the case of randomised experiment, we have the following : 
+
+\begin{itemize}
+\item[--] $ E[Y^{a=1}|A=1] =  E[Y^{a=1}|A=0] =  E[Y^{a=1}] $
+\item[--] $ E[Y^{a=0}|A=1] =  E[Y^{a=0}|A=0] =  E[Y^{a=0}] $
+\end{itemize}
+
+Based on the assertions above, it is easy to prove that a randomised expriment leads to  : $$ ACE = S^{*} $$ which means that it is possible to determine causation from the existing data. This also suppose comparability conditions so that the individuals in both groups are identical.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -243,7 +253,7 @@ As a result, ..... - add formulas
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.7 \textwidth]{figures/asso_inter_caus.png}
+\includegraphics[width=0.6 \textwidth]{figures/asso_inter_caus.png}
 \caption{The causal hierarchy\cite{pearl2019seven}}
 \end{figure}
 
