@@ -152,7 +152,7 @@ This is an important concept for causation. Counterfactuals could be defined as 
 
 \subsection{Confounders}
 
-A confounding variable is an unmeasured variable that influences both the supposed cause and the supposed effect. Ignoring the confounder may lead to conclude an association between 2 variables when actually it is not the case. Confounders can also increase the variance or introduce biais.
+A confounding variable is an unmeasured variable that influences both the supposed cause and the supposed effect. Ignoring the confounder may lead to conclude an association between 2 variables when actually it is not the case. Confounders can also increase the variance or introduce bias.
 
 Different technics exist to reduce the effect of the confounders (random samples, control variable ...)\footnote{An interesting article about confounders could be found at \href{https://www.statisticshowto.com/experimental-design/confounding-variable/}{www.statisticshowto.com}}. However, knowing in advance all the the confounders in the data/model is still very important.
 
@@ -181,30 +181,65 @@ The above example is one of the best illustration of the Simpson's paradox : whe
 
 \section{Causal inference}
 
+In the this section, we suppose the following : 
+
+\begin{itemize}
+\item[--] $Y_{i}$ : random variable of the outcome for the "unit" i  (a unit is a physical object, for example, a person, at a particular point in time \cite{rubin2005causal}),
+\item[--] N : the number of units,
+\item[--] Y : ($Y_{1}$, $Y_{2}$, ..., $Y_{n}$),
+\item[--] A : treatment (a treatment is an action that can be applied or withheld from the unit \cite{rubin2005causal}),
+\item[--] $Y_{i}^{a}$ : controlled treatment 
+\end{itemize}
+
+
+For simplicity, we assume that the treatment (A) can take only 2 values : \{0,1\}.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Average Causal Effect - ACE}
-
-see \cite{hernan2020causal}
+\subsection{Individual level Causal Effect : ICE}
+The ICE is defined as the difference between an individual’s two potential outcomes :
+$$ ICE = \delta = Y_{i}^{a=1} - Y_{i}^{a=0} $$
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Individual level Causal Effect - ICE}
+\subsection{Average Causal Effect : ACE}
+The ACE is the population average of the individual level causal effects :
+$$ ACE = E[\delta] = E[Y^{a=1}] - E[Y^{a=0}] $$
 
-see \cite{hernan2020causal}
+If the treatment has a causal effect on the outcome, the value of the ACE will be different than 0 and it will be equal to zero in the other case. This is a mesure of the causation.
+\subsection{Standard estimator : S*}
+
+$$ S^{*} = E[Y^{a=1}|A=1] - E[Y^{a=0}|A=0] $$
+
+S* is computed from the treatment and controlled groups, and not from the entire population as for the ACE. This is a mesure of the association.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Fundamental Problem of Causal Inference}
 
+Because one can never observe both potentiel outcomes ( the outcome under different treatments ), it is impossible to mesure directly the causal effects ( ACE and ICE ). This is what Holland called as the "fundamental problem of causal inference" \cite{holland1986statistics}.
+
 - Missing data problem 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Randomised experimentation}
+
+One of the solution to tackle the fundamental problem of causal inference is to use a randomised experience. 
+
+A randomised experiment is when the investigator carried out the action of interest and it was randomised because the decision to act on any study subject was made by a random device. Randomisation results in convincing causal inferences, the downsides being mostly financial and ethical. 
+
+A scientific study in which the investigator observes and records the relevant data is referred to as an observational study. And while observational studies are not considered robust causal inference tools, much human knowledge is derived from them.
+
+Statistical data, derived from studies and experimentation, can represent many forms of bias. The two most relevant to causal inference are Measurement Bias and Selection Bias.
+
+
+As a result, ..... - add formulas
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{The Causal Hierarchy}
-
 
 \begin{figure}[h]
 \centering
