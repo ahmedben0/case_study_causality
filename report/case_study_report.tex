@@ -49,7 +49,7 @@
      {\large \textsc{   }}\\
      \vspace{1em}
     \centering
-      \includegraphics[width=0.5 \textwidth]{figures/LogoCS.png} \\
+      \includegraphics[width=0.5 \textwidth]{../figures/LogoCS.png} \\
     \vspace{4cm}
       {\LARGE\textbf{Case Study : Causal Inference}\\  
        \vspace{1em}
@@ -81,9 +81,9 @@
 \section{Introduction}
 One of the most challenging questions in every problem is the one related to understanding the reason(s) why an action happened and whether or not we can explain it with the information we have at our disposal. Another interesting question one might ask is what would be the outcome if the conditions of the experiment were different ? What would happen if we have more/less information ? What will we get if we change completely the set of inputs ?
 
-When thinking about these questions, having a time machine seems as the perfect solution : we can then repeat the same experiment with different initial conditions and record the outcome in every scenario. A more realistic a possible solution would be to use Causal inference, which aims to estimate the likelihood of an event under static conditions and also under dynamic changing conditions.
+When thinking about these questions, having a time machine seems as the perfect solution : we can then repeat the same experiment with different initial conditions and record the outcome in every scenario. A more realistic and possible solution would be to use Causal inference, which aims to estimate the likelihood of an event under static conditions and also under dynamic changing conditions.
 
-When searching about causal inference, one will definitely come across some of the work of Judea Pearl who is credited for developing a theory of counterfactuals and causal inference based on structured models.\footnote{After watching dozens of Judea Pearl lectures and reading many of his papers, we can only recommend doing the same. One of his main ideas is that even if machine learning is shaping millions of industries around the globe, this is done without attention to fundamental theoretical impediments. This might lead machine learning algorithms, very soon, to reach the barriers of impossibility. According to Judea Pearl, the goal is to use the knowledge acquired from causal inference and combine it with the success of machine learning in order to achieve more general models.}
+While searching about causal inference, one will definitely come across some of the work of Judea Pearl who is credited for developing a theory of counterfactuals and causal inference based on structured models.\footnote{After watching dozens of Judea Pearl lectures and reading many of his papers, we can only recommend doing the same. One of his main ideas is that even if machine learning is shaping millions of industries around the globe, this is done without attention to fundamental theoretical impediments. This might lead machine learning algorithms, very soon, to reach the barriers of impossibility. According to Judea Pearl, the goal is to use the knowledge acquired from causal inference and combine it with the success of machine learning in order to achieve more general models.}
 
 In this document, we will try to study the different literatures about causal inference and collect the results in a simple and yet detailed way. Many papers and book are mentioned in the references section, some were used in writing these document, some are not. Those interested more in the subject may take a look at them.  
 
@@ -106,7 +106,7 @@ One of the most common phrases in statistics is "correlation does not imply caus
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.6 \textwidth]{figures/corr_caus.png}
+\includegraphics[width=0.6 \textwidth]{../figures/corr_caus.png}
 \caption{an example of correlation \href{https://www.decisionskills.com/blog/how-ice-cream-kills-understanding-cause-and-effect}{(source)}}
 \end{figure}
 
@@ -136,7 +136,7 @@ To have a better understanding of how causation and association differ, the foll
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.6 \textwidth]{figures/asso_caus.png}
+\includegraphics[width=0.6 \textwidth]{../figures/asso_caus.png}
 \caption{a visualisation of the difference between causation and association}
 \end{figure}
 
@@ -158,7 +158,7 @@ Different technics exist to reduce the effect of the confounders (random samples
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.5 \textwidth]{figures/confounding.png}
+\includegraphics[width=0.5 \textwidth]{../figures/confounding.png}
 \caption{An example of a confounding variable : in this example, the Gender is not observed and it is affecting the variables Drug and Recovery}
 \end{figure}
 
@@ -170,7 +170,7 @@ Simpson’s paradox, also called Yule-Simpson effect, in statistics, an effect t
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.7 \textwidth]{figures/simpson.png}
+\includegraphics[width=0.7 \textwidth]{../figures/simpson.png}
 \caption{Illustration of the Simpson’s Paradox\cite{pearl2016causal}}
 \end{figure}
 
@@ -253,7 +253,7 @@ Based on the assertions above, it is easy to prove that a randomised expriment l
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.6 \textwidth]{figures/asso_inter_caus.png}
+\includegraphics[width=0.6 \textwidth]{../figures/asso_inter_caus.png}
 \caption{The causal hierarchy\cite{pearl2019seven}}
 \end{figure}
 
@@ -310,6 +310,6 @@ library developed by Microsoft \cite{dowhy}, blog article available \href{https:
 \newpage
 \bibliographystyle{ieeetr} % plain : no order -- ieeetr : sorted
 \nocite{*}    % print all references
-\bibliography{reference/ref}
+\bibliography{../reference/ref}
 
 \end{document}
