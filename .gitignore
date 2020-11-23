@@ -8,3 +8,4 @@
 *.toc
 *.bib
 *.xml
+*/.ipynb_checkpoints
