@@ -37,7 +37,7 @@
     \column{0.32}
 %-------------------------------------
 \block{Introduction}{
-One of the most challenging questions in every problem is the one related to understanding the reason(s) why an action happened and whether or not we can explain it with the information we have at our disposal. Determining the relationships between the inputs can be done on different levels : when recording the data or even once the data collection is done. Unlike correlation, causation cannot be extracted only from the distribution of the data. Thus, the aim of this case study is analyse the different literatures on causal inference for a better understanding of this notion. \\
+One of the most challenging questions in every problem is the one related to understanding the reason(s) why an action happened and whether or not we can explain it with the information we have at our disposal. Determining the relationships between the inputs can be done on different levels : when recording the data or even once the data collection is done. Unlike correlation, causation cannot be extracted only from the distribution of the data. In this case study, we introduce the main concepts in the study of causality, we formulate the underlying mathematical problem, and then we offer a road map to solve this problem.  \\
 }
     
     
@@ -49,7 +49,7 @@ Here is some of the most important definitions \cite{pearl2010mathematics, pearl
 \item  \textbf{Causal concept} : any relationship that cannot be defined from the distribution alone. One should also rely on causal assumption that explains the different relationships. For example: randomisation, confounding.
 
 \begin{tikzfigure}[a visualisation of the difference between causation and association]
-\includegraphics[width=0.7\linewidth]{../figures/asso_caus.png}
+\includegraphics[width=0.6\linewidth]{../figures/asso_caus.png}
 \end{tikzfigure}
         
 \item \textbf{Counterfactuals} : the unobserved outcome. It is the answer to the question : what if?
@@ -91,7 +91,9 @@ In the case of a treatment (A) that has only 2 possible values \{0,1\}, we can d
 \block{Fundamental Problem of Causal Inference}{
 Because one can never observe both potentiel outcomes (the outcome under different treatments), it is impossible to mesure directly the causal effects ( ACE and ICE ). This is what Holland called as the "fundamental problem of causal inference" \cite{holland1986statistics}. \\
 
-This can be seen as missing data problem : we have $E[Y^{a=1}|A=1]$ and $E[Y^{a=0}|A=0]$ which are equal respectively to $E[Y|A=1]$ and $E[Y|A=0]$ but we don't know  $E[Y^{a=1}|A=0]$ and $E[Y^{a=1}|A=0]$. Thus, this problem can be considered as a missing data problem. 
+This can be seen as missing data problem, and cannot be resolved. Thus, causal inference aims to use several methods to obtain the best approximate  measure of ACE , through randomized experimentation and the study of confounders and counterfactuals.
+
+%we have $E[Y^{a=1}|A=1]$ and $E[Y^{a=0}|A=0]$ which are equal respectively to $E[Y|A=1]$ and $E[Y|A=0]$ but we don't know  $E[Y^{a=1}|A=0]$ and $E[Y^{a=1}|A=0]$. Thus, this problem can be considered as a missing data problem. 
 }
 
 
@@ -117,26 +119,43 @@ In the case of randomised experiment, we have the following :
 %-------------------------------------
     \column{0.32}
 %-------------------------------------
-%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%
 \block{Causal discovery}{
 
-A traditional way to discover causal relations is to use interventions or randomized experiments, which is, however, in many cases of interest too expensive, too time- consuming, unethical, or even impossible. Therefore, inferring the underlying causal structure from purely observational data, or from combinations of observational and experimental data, has drawn much attention in various disciplines. With the rapid accumulation of huge volumes of data, it is necessary to develop automatic causal search algorithms that scale well.\cite{10.3389/fgene.2019.00524}
+A traditional way to discover causal relations is to use interventions or randomized experiments, which is, however, in many cases of interest too expensive, too time- consuming, unethical, or even impossible. Therefore, inferring the underlying causal structure from purely observational data, or from combinations of observational and experimental data, has drawn much attention in various disciplines. With the rapid accumulation of huge volumes of data, it is necessary to develop automatic causal search algorithms that scale well. %\cite{10.3389/fgene.2019.00524}
 
-\begin{tikzfigure}[an illustration of the PC algorithm]
-\includegraphics[width=0.5\linewidth]{../figures/PC_algorithm_1.png}
-\end{tikzfigure}
+%\begin{tikzfigure}[an illustration of the PC algorithm]
+%\includegraphics[width=0.5\linewidth]{../figures/PC_algorithm_1.png}
+%\end{tikzfigure}
 }
+
+%%%%%%%%%%%%%%%%%%%%%%
+\block{Methods: From classical to machine learning}{
+
+In order to put to use the knowledge gathered through the randomized experimentation and test the hypothesis formulated through causal discovery, we need methods that allow for counterfactual estimation and confounding factors elimination. \\ Many classical methods exist in the litterature :
+\begin{itemize}
+\item \textbf{ Re-weighting } : To assign a different weight to each sample in the observational dataset, in order to better reflect on the population and eliminate any confounding effect of a selection bias.
+\item \textbf{ Matching } : After defining distance between samples to reflect on their similarity, we study the outcomes of neighboring samples, which can reveal confounders. We can also estimate counterfactuals by inferring from similar sample points.
+\item \textbf{ Tree-based methods }: Tree-based methods refer to the use of decision-trees on an elementary level. A decision- tree allows for a partition of the sample space. The criterias used to partition the data can allow the detection of confounders and counterfactuals, and thus offer a better estimate of the causal effect.
+\end{itemize}
+These classical methods offer a good starting point, but aren't suited to the databases of today, containing millions of samples, with data that is so deeply intertwines that these methods simply aren't realistic. It's where machine learning steps in, by putting to use the massive calculatory powers of modern computers in order to better tackle the causal inference problem.\\
+\textbf{Doubly Robust Regression},\textbf{ Subspace learning}, and \textbf{Deep Representation learning} all offer a promising set of models to tackle selection bias, underlying confounders and missing counterfactuals, which in turn allows for a better estimation of the average causal effect.
+
+}
+
+    
     
 
+
 %%%%%%%%%%%%%%%%%%%%
-\block{Inference engine - DoWhy Library}{
+%\block{Inference engine - DoWhy Library}{
 
-\begin{tikzfigure}[The algorithm suggested by Judea Pearl \cite{pearl2019seven}]
-\includegraphics[width=0.5\linewidth]{../figures/inference_engine.png}
-\end{tikzfigure}
+%\begin{tikzfigure}[The algorithm suggested by Judea Pearl \cite{pearl2019seven}]
+%\includegraphics[width=0.5\linewidth]{../figures/inference_engine.png}
+%\end{tikzfigure}
 
 
-}
+%}
 
 
 %%%%%%%%%%%%%%%%%%%%
