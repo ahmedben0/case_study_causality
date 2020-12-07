@@ -12,7 +12,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[autolanguage]{numprint}
 \usepackage{color}
-
+\usepackage{subfig}
 
 \usepackage{hyperref}
 \usepackage{listings}
@@ -86,6 +86,59 @@ When thinking about these questions, having a time machine seems as the perfect 
 While searching about causal inference, one will definitely come across some of the work of Judea Pearl who is credited for developing a theory of counterfactuals and causal inference based on structured models.\footnote{After watching dozens of Judea Pearl lectures and reading many of his papers, we can only recommend doing the same. One of his main ideas is that even if machine learning is shaping millions of industries around the globe, this is done without attention to fundamental theoretical impediments. This might lead machine learning algorithms, very soon, to reach the barriers of impossibility. According to Judea Pearl, the goal is to use the knowledge acquired from causal inference and combine it with the success of machine learning in order to achieve more general models.}
 
 In this document, we will try to study the different literatures about causal inference and collect the results in a simple and yet detailed way. Many papers and book are mentioned in the references section, some were used in writing these document, some are not. Those interested more in the subject may take a look at them.  
+
+
+\newpage
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introductory example : Simpson's Paradox}
+
+Simpson’s paradox, also called Yule-Simpson effect, in statistics, is an effect that occurs when the marginal association between two categorical variables is qualitatively different from the partial association between the same two variables after controlling for one or more other variables.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7 \textwidth]{../figures/simpson.png}
+\caption{Illustration of the Simpson’s Paradox\cite{pearl2016causal}}
+\end{figure}
+
+Here is a more detailed illustration of the paradox : 
+
+Imagine we are trying to work out whether a certain drug is an effective treatment for a disease. To decide whether it is effective, we compare people who took the drug (call this x, if someone took the drug, x=1, if not x=0), by examining how many of each recovered from the disease (call this y: y=1 means they got better, y=0 means they did not).
+
+%%%%%%%%%% !!!!
+%cite dataset
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.4 \textwidth]{../figures/simpson 1.png}
+\caption{Results of a study on the effectiveness of a new drug, layered by age group }
+\label{fig:studyage}
+\end{figure}
+
+When we just look at the last row of Figure~\ref{fig:studyage}, we find that of 250 people who took the drug, 110 recovered ($44 \% $), whereas out of the 250 people who did not take the drug 177 recovered (71\% ). From these results it looks like there is a clear advantage to not taking the drug. Unfortunately, this drug was not administered as part of a random controlled trial. This means that the decision of whether or not to take the drug may have been confounded.
+
+Now let's look at the recovery rate per age group : In every row representing each age group, the patients who were administered the drug got noticeably better.
+Thus our conclusion about the drug effectiveness is reversed.
+
+This can be illustrated by Figure~\ref{fig:simpsonexample} above.
+
+\begin{figure}[!tbp]
+  \centering
+  \subfloat[Positive Correlation]{\includegraphics[width=0.44\textwidth]{../figures/simpson2.png}\label{fig:f1}}
+  \hfill
+  \subfloat[Negative correlation]{\includegraphics[width=0.44\textwidth]{../figures/simpson 3.png}\label{fig:f2}}
+  \caption{Reversal of correlation when a confounding variable, here age, is taken into account}
+\label{fig:simpsonexample}
+\end{figure}
+
+
+
+
+
+It is clear now, more often than not, without proper ground knowledge ( here it is medical expertise ), we can ignore confounders such as age, income, .. etc. And without proper randomized experimentation, which is very costly, our understanding of causation can be be contrary to reality.
 
 
 \newpage
@@ -164,22 +217,12 @@ Different technics exist to reduce the effect of the confounders (random samples
 
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  
- \subsection{Simpson's paradox}
 
-Simpson’s paradox, also called Yule-Simpson effect, in statistics, an effect that occurs when the marginal association between two categorical variables is qualitatively different from the partial association between the same two variables after controlling for one or more other variables.
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.7 \textwidth]{../figures/simpson.png}
-\caption{Illustration of the Simpson’s Paradox\cite{pearl2016causal}}
-\end{figure}
-
-The above example is one of the best illustration of the Simpson's paradox : when analysing the whole dataset, the first conclusion we can draw is that the amount of exercice is positively correlated with the level of cholesterol. Although, when including the information of age, we can see clearly, for every age category, a negative correlation between the two variables. Thus, domain knowledge is something very important when investigating the relationships in the data and sometimes the expected results are achieved only after increasing/decreasing the studied set of data - adding/excluding some variables.
-
-\newpage 
+%\newpage 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Causal inference}
+\section{A mathematical model of causal inference}
 
 In the this section, we suppose the following : 
 
@@ -203,40 +246,21 @@ $$ ICE = \delta = Y_{i}^{a=1} - Y_{i}^{a=0} $$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Average Causal Effect : ACE}
-The ACE is the population average of the individual level causal effects :
+\subsection{Average Causal Effect : ACE / Average Treatment Effect : ATE}
+The ACE or ATE is the population average of the individual level causal effects :
 $$ ACE = E[\delta] = E[Y^{a=1}] - E[Y^{a=0}] $$
 
 ACE is computed over the entire population. If the treatment has a causal effect on the outcome, the value of the ACE will be different than 0 and it will be equal to zero in the other case. This is a mesure of the causation. 
-
+%\newpage
 \subsection{Standard estimator : S*}
 
 $$ S^{*} = E[Y^{a=1}|A=1] - E[Y^{a=0}|A=0] $$
 
 S* is computed from the treatment and control groups, and not from the entire population as for the ACE. This is a mesure of the association.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsection{Fundamental Problem of Causal Inference}
-
-Because one can never observe both potentiel outcomes ( the outcome under different treatments ), it is impossible to mesure directly the causal effects ( ACE and ICE ). This is what Holland called as the "fundamental problem of causal inference" \cite{holland1986statistics}.
-
-This can be seen as missing data problem : we have $E[Y^{a=1}|A=1]$ and $E[Y^{a=0}|A=0]$ which are equal respectively to $E[Y|A=1]$ and $E[Y|A=0]$ but we don't know  $E[Y^{a=1}|A=0]$ and $E[Y^{a=1}|A=0]$.
-
-Since S* is a mesure of association and ACE is a mesure of the causation, these 2 values are not necessarily equal.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsection{Randomised experimentation}
-
-One of the solution to tackle the fundamental problem of causal inference is to use a randomised experience. 
-
-A randomised experiment is when the investigator carried out the action of interest and it was randomised because the decision to act on any study subject was made by a random device. Randomisation results in convincing causal inferences, the downsides being mostly financial and ethical. 
-
-A scientific study in which the investigator observes and records the relevant data is referred to as an observational study. And while observational studies are not considered robust causal inference tools, much human knowledge is derived from them.
-
-Statistical data, derived from studies and experimentation, can represent many forms of bias. The two most relevant to causal inference are Measurement Bias and Selection Bias.
-
+\textbf{\textit{Important special case} : Randomized experimentation}
+ 
+A randomised experiment is when the investigator carried out the action of interest and it wasrandomised because the decision to act on any study subject was made by a random device.Randomisation results in convincing causal inferences, the downsides being mostly finances and logistics.
 
 In the case of randomised experiment, we have the following : 
 
@@ -247,63 +271,169 @@ In the case of randomised experiment, we have the following :
 
 Based on the assertions above, it is easy to prove that a randomised expriment leads to  : $$ ACE = S^{*} $$ which means that it is possible to determine causation from the existing data. This also suppose comparability conditions so that the individuals in both groups are identical.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsection{The Causal Hierarchy}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.6 \textwidth]{../figures/asso_inter_caus.png}
-\caption{The causal hierarchy\cite{pearl2019seven}}
-\end{figure}
-
-
-One of the very interesting papers that explains causal inference is : \href{https://cacm.acm.org/magazines/2019/3/234929-the-seven-tools-of-causal-inference-with-reflections-on-machine-learning/fulltext?mobile=false}{"The Seven Tools of Causal Inference, with Reflections on Machine Learning"} \cite{pearl2019seven}. This section is thus inspired mostly by this paper.
-
-\cite{pearl2019seven} 
- 
- 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
- \subsection{Graph representation}
-
-
-\newpage 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Paper : Judea Pearl -- remove this}
-
-see \cite{pearl2010mathematics} \\
-One of the best paper so far. It explains clearly the difference between the causal concept and the associational concept (for example : correlation). The first concept ...
-
-
-%% http://singapore.cs.ucla.edu/csl_papers.html     http://bayes.cs.ucla.edu/home.htm
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Notations -- remove this}
-see \cite{yao2020survey} and \cite{hernan2020causal}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Definition of the causality -- remove this}
-
-Perhaps the most important message of the discussion and methods presented in this paper would be a widespread awareness that (1) all studies concerning causal relations must begin with causal assumptions of some sort and (2) that a friendly and formal language is currently available for articulating such assumptions.\cite{pearl2010mathematics}
-
-\cite{rubin2005causal}
-
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \section{A working example : Evaluating the Econometric Evaluations of Training Programs }
+ 
+ All results are obtained through the python notebook added to the git repository of the project \cite{ourGithub}.
+ It is inspired by the models in \cite{lalondeDowhy} , \cite{ijmbarrExample}, and \cite{rugg2Example}.
+ 
+ 
+ %%%
+ 
+ 
+ 
+ 
+ \subsection{ Dataset}
+ 
+The dataset used to exhibit a model of causal inference is the famous Lalonde datatset, based on the paper : "Evaluating the Econometric Evaluations of Training Programs" by Robert Lalonde\cite{berkeleyExample}.
 
-\section{Causal discovery}
+It studies the effect of education/job training ( the "treatment" ) on the revenue of students after four years in 1978 ( "the outcome" ).
 
-A traditional way to discover causal relations is to use interventions or randomized experiments, which is, however, in many cases of interest too expensive, too time- consuming, unethical, or even impossible. Therefore, inferring the underlying causal structure from purely observational data, or from combinations of observational and experimental data, has drawn much attention in various disciplines. With the rapid accumulation of huge volumes of data, it is necessary to develop automatic causal search algorithms that scale well.\cite{10.3389/fgene.2019.00524}
+The goal is to estimate the causal effect of the education on revenue, and how it compares to other confounding variables, here it is likely age, education, race and marital status.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8 \textwidth]{../figures/data_overview.png}
+\caption{Dataset overview}
+\end{figure}
 
-\section{Python Library : DoWhy}
-library developed by Microsoft \cite{dowhy}, blog article available \href{https://www.microsoft.com/en-us/research/blog/dowhy-a-library-for-causal-inference/}{link}
+
+\subsection{ Problem}
+
+\begin{itemize}
+    \item Y represents the response, here is is 1978 earnings ("re78")
+    \item D represents the treatment: the job training program ("treat")
+    \item X represents the confounding variables, here it likely is age, education, race and marital status.
+\end{itemize}
+
+
+
+\textbf{Problem statement} : How can we disentangle the pure effect of the job training ( Treatment D ) from that of age, education, race, and marital status ( Confounders X ), all have a likely influence on earnings Y ?
+ 
+
+
+What we want to know here is the Average Treatment Effect (ATE):
+$$ \Delta = ACE = E[Y^{D=1}] - E[Y^{D=0}] $$
+
+However, since we do not have a randomized setting, if we try to estimate this quantity from the row observational distribution, we get:
+$$ \Delta^{'} =E[Y \vert  D=1] - E[Y \vert  D=0] \neq \Delta $$
+
+This difference is due to the fact that we do not know, outside a randomized setting, that the treatment D itself is independent from the covariate X. 
+However for the rest of this case study, and to be able to use the packages DoWhy and CausalIinference on Python, we make the assumption that D is independent from X.
+
+\subsubsection{Data analysis, Causal discovery}
+
+At first, let look at the statistical description of our database : 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1 \textwidth]{../figures/data_description.png}
+\caption{Statistical description of the dataset}
+\end{figure}
+
+
+Let's have a deeper look at how revenue is distributed between the group who got the job training and the one who did not : 
+
+\begin{figure}[h]
+\small
+\centering
+\includegraphics[width=0.5 \textwidth]{../figures/treatment_average_2.png}
+\caption{Revenue average for those who followed the job training program versus those who didn't}
+\end{figure}
+
+
+As we could have expected, the group who benefited from the job training program have a higher average revenue after 4 years. However, in order to quantify the net effect of the job training program, we have to check the balance of our data set, and cross-examine the influence of each and every confounder of X.
+We start with age ( left figure ) and education ( right figure ):
+
+\begin{figure}[!tbp]
+  \centering
+  \subfloat[Age imbalance]{\includegraphics[width=0.44\textwidth]{../figures/age_imbalance.png}\label{fig:f1}}
+  \hfill
+  \subfloat[education imbalance]{\includegraphics[width=0.44\textwidth]{../figures/education_imbalance.png}\label{fig:f2}}
+  \caption{Dataset imbalances}
+\end{figure}
+
+
+
+At first look, it is clear that our dataset is imbalanced. This imbalance in age distribution, as well as other confounders, makes drawing any conclusion erroneous. 
+
+
+
+
+\subsubsection{Naive estimate}
+
+At first, let's have a naive estimate of the impact of the job training program on revenue.
+We ignore any potential confounder of X. We obtain through the mean formula :
+$$ \Delta^{'} = ACE_{0} = E[Y1] - E[Y0]= \$ 1794.34 $$
+
+
+\subsubsection{Linear Model}
+
+An intuitive approach to the estimating the impact of the confounders X would be the linear model, assuming the law of the revenue Y follows :
+$$ Y = \alpha + \beta D + \gamma X
+$$
+A simple multi-variable linear regression allows us to obtain specific estimate for each and every coefficient.
+Using the CausalModel library on python, we compute the mean using the obtained coefficients, and we obtain a rough estimate of the Average Causal Effect : 
+
+%%
+\begin{figure}[h]
+\small
+\centering
+\includegraphics[width=0.8 \textwidth]{../figures/ate_linear_model.png}
+\caption{Average job training effect according to the matching model}
+\end{figure}
+
+
+
+Thus, according to the linear model, the net increase in revenue due to the job training is \$ 1676.90, a significant decrease from the \$1794.34 in the naive model. This decrease is due to X, the confounder variable, being taken into account.
+
+\textbf{However}, the linear model has it limits. First of all, it is heavily influenced with data imbalances. More over, the OLS estimator is a spimplistic point of view and may not capture all the intricacies of the interaction of the outcome Y with the confounders.
+
+In the next section, we offer a more sophisticated approach, that improves on the linear model.
+
+%\newpage
+\subsubsection{A more sophisticated approach : propensity score, stratification and matching}
+
+The \textbf{Propensity Score} is the probability of receiving the treatment, conditional on the covariates.
+$$ p(X) = P( D=1 \vert X )$$
+It has two main uses : 
+\begin{itemize}
+    \item Instead of using X as the covariate, $p(X)$ summarizes the information contained in X that is relevant to causal inference.
+    \item It allows us to drop samples with extreme propensity scores, and to focus on matching on similar samples
+\end{itemize}
+Both the CausalInference and DoWhy allows for a quick estimation of p(X) using statistical likelihood tests, and for trimming the dataset using this estimation.
+
+\textbf{Stratification} is clustering the samples into layers of similar propensity scores, which allow for more consistent estimations.
+
+\textbf{Matching} estimation exploits the specific distribution within the stratified layers, using nearest-neighbour methods, to improve on the quality of estimates and detect the slightest of effect confounding variables have.
+
+Applying these three methods to our dataset, we obtain the following output to our algorithm : 
+
+\begin{figure}[h]
+\small
+\centering
+\includegraphics[width=0.8 \textwidth]{../figures/matching_estimate.png}
+\caption{Average job training effect according to the matching model}
+\end{figure}
+
+
+
+
+The average treatment effect of the job training program is an \$ 1604 increase in revenue over the following four years. 
+
+\subsubsection{Conclusion}
+
+While our model is a very simplified approach to the causal inference problem, it offers a solid base to build on, using more sophisticated model. 
+Deep learning models in particular, as cited in %% 
+do not assume linearity, which is far more reflective of reality, and allow for better estimation of the Average Causal Effect of a perceived cause on a specific outcome
+
+
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
