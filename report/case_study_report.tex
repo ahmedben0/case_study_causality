@@ -345,7 +345,8 @@ Let's have a deeper look at how revenue is distributed between the group who got
 
 
 As we could have expected, the group who benefited from the job training program have a higher average revenue after 4 years. However, in order to quantify the net effect of the job training program, we have to check the balance of our data set, and cross-examine the influence of each and every confounder of X.
-We start with age ( left figure ) and education ( right figure ):
+
+We start with age (left figure) and education (right figure) represented in Figure~\ref{ref:imbalance} :
 
 \begin{figure}[!tbp]
   \centering
@@ -353,12 +354,12 @@ We start with age ( left figure ) and education ( right figure ):
   \hfill
   \subfloat[education imbalance]{\includegraphics[width=0.44\textwidth]{../figures/education_imbalance.png}\label{fig:f2}}
   \caption{Dataset imbalances}
+  \label{ref:imbalance}
 \end{figure}
 
 
 
 At first look, it is clear that our dataset is imbalanced. This imbalance in age distribution, as well as other confounders, makes drawing any conclusion erroneous. 
-
 
 
 
@@ -389,7 +390,7 @@ Using the CausalModel library on python, we compute the mean using the obtained 
 
 Thus, according to the linear model, the net increase in revenue due to the job training is \$ 1676.90, a significant decrease from the \$1794.34 in the naive model. This decrease is due to X, the confounder variable, being taken into account.
 
-\textbf{However}, the linear model has it limits. First of all, it is heavily influenced with data imbalances. More over, the OLS estimator is a spimplistic point of view and may not capture all the intricacies of the interaction of the outcome Y with the confounders.
+\textbf{However}, the linear model has it limits. First of all, it is heavily influenced with data imbalances. Moreover, the OLS estimator is a simplistic point of view and may not capture all the intricacies of the interaction of the outcome Y with the confounders.
 
 In the next section, we offer a more sophisticated approach, that improves on the linear model.
 
@@ -400,7 +401,7 @@ The \textbf{Propensity Score} is the probability of receiving the treatment, con
 $$ p(X) = P( D=1 \vert X )$$
 It has two main uses : 
 \begin{itemize}
-    \item Instead of using X as the covariate, $p(X)$ summarizes the information contained in X that is relevant to causal inference.
+    \item Instead of using X as the covariate, $p(X)$ summarises the information contained in X that is relevant to causal inference.
     \item It allows us to drop samples with extreme propensity scores, and to focus on matching on similar samples
 \end{itemize}
 Both the CausalInference and DoWhy allows for a quick estimation of p(X) using statistical likelihood tests, and for trimming the dataset using this estimation.
@@ -409,7 +410,7 @@ Both the CausalInference and DoWhy allows for a quick estimation of p(X) using s
 
 \textbf{Matching} estimation exploits the specific distribution within the stratified layers, using nearest-neighbour methods, to improve on the quality of estimates and detect the slightest of effect confounding variables have.
 
-Applying these three methods to our dataset, we obtain the following output to our algorithm : 
+Applying these three methods to our dataset, we obtain the following output to our algorithm: 
 
 \begin{figure}[h]
 \small
@@ -421,13 +422,12 @@ Applying these three methods to our dataset, we obtain the following output to o
 
 
 
-The average treatment effect of the job training program is an \$ 1604 increase in revenue over the following four years. 
+The average treatment effect of the job training program is an \$1604 increase in revenue over the following four years. 
 
 \subsubsection{Conclusion}
 
 While our model is a very simplified approach to the causal inference problem, it offers a solid base to build on, using more sophisticated model. 
-Deep learning models in particular, as cited in %% 
-do not assume linearity, which is far more reflective of reality, and allow for better estimation of the Average Causal Effect of a perceived cause on a specific outcome
+Deep learning models in particular, as cited in \cite{yao2020survey}, do not assume linearity, which is far more reflective of reality, and allow for better estimation of the Average Causal Effect of a perceived cause on a specific outcome
 
 
 
@@ -438,6 +438,7 @@ do not assume linearity, which is far more reflective of reality, and allow for 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newpage
+\addcontentsline{toc}{section}{References}
 \bibliographystyle{ieeetr} % plain : no order -- ieeetr : sorted
 \nocite{*}    % print all references
 \bibliography{../reference/ref}
